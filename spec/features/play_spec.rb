@@ -22,7 +22,21 @@ feature 'playing a game' do
   # I want to choose the shapes I can play
   scenario 'choose a shape' do
     click_button 'Rock'
-    expect(page).to have_content 'You chose Rock'
+    expect(page).to have_content 'You chose Rock!'
   end
 
+  # As a marketer
+  # So I can play a game
+  # I want the game to choose an option
+  scenario 'game chooses "Rock"' do
+    click_button 'Rock'
+
+    message = find(:css, '#opponent').text.strip # .strip will trim the spaces on either end
+
+    expect(page).to have_content 'Opponent chose Rock!'
+  end
+
+  def possible_messages
+    [:rock, :paper, :scissors].map { |shape| 'Opponent chose #{shape.to_s.captialize}!' }
+  end
 end
